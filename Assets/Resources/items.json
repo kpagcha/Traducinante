@@ -49,7 +49,7 @@
 			"audio": "perro_english.mp3"
 		},
 		"Spanish": {
-			"text": "dog",
+			"text": "perro",
 			"audio": "dog_spanish.mp3"
 		},
 		"model": "Sofa/sofa"

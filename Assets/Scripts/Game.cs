@@ -9,6 +9,7 @@ public class Game : MonoBehaviour
 	private GameObject currentGameObject;
 	private LangObject currentLangObject;
 	public int numberOfQuestions = 5;
+    public int numberOfChoices = 4;
 	
 	void Start ()
 	{
@@ -26,7 +27,7 @@ public class Game : MonoBehaviour
 			foreach (DictionaryEntry langItem in itemJson) {
 				string lang = langItem.Key as string;
 
-				if (lang != "model") {
+				if (lang != "model")  {
 					string text = itemJson[lang]["text"].ToString();
 					string audio = itemJson[lang]["audio"].ToString();
 					langObject.addLang(lang, text, audio);
@@ -36,7 +37,7 @@ public class Game : MonoBehaviour
 			objects.Add(langObject);
 		}
 
-		//ShuffleObjects ();
+		objects = Shuffle (objects);
 
 		currentLangObject = objects [0] as LangObject;
 
@@ -58,21 +59,21 @@ public class Game : MonoBehaviour
 		return currentLangObject;
 	}
 
-	private void ShuffleObjects()
+	public ArrayList Shuffle(ArrayList list)
 	{
-		ArrayList tmp = objects;
+		ArrayList tmp = list.Clone() as ArrayList;
 		ArrayList shuffled = new ArrayList();
 			
 		System.Random rnd = new System.Random ();
 
 		while (tmp.Count != 0) {
-			int i = rnd.Next(tmp.Count);
+            int i = rnd.Next(0, tmp.Count - 1);
 			shuffled.Add(tmp[i]);
 			tmp.RemoveAt(i);
 		}
 
-		objects = shuffled;
-	}
+		return shuffled;
+    }
 
 	protected void InitializeObject()
 	{
