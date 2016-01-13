@@ -6,8 +6,10 @@ using LitJson;
 public class Game : MonoBehaviour
 {
 	private ArrayList objects = new ArrayList();
+	private GameObject currentGameObject;
+	private LangObject currentLangObject;
 	public int numberOfQuestions = 5;
-
+	
 	void Start ()
 	{
 		string jsonString = File.ReadAllText (Application.dataPath + "/Resources/items.json");
@@ -34,8 +36,26 @@ public class Game : MonoBehaviour
 			objects.Add(langObject);
 		}
 
-		ShuffleObjects ();
-		LogLangObjects ();
+		//ShuffleObjects ();
+
+		currentLangObject = objects [0] as LangObject;
+
+		InitializeObject ();
+	}
+
+	public ArrayList getObjects()
+	{
+		return objects;
+	}
+
+	public GameObject getCurrentGameObject()
+	{
+		return currentGameObject;
+	}
+
+	public LangObject getCurrentLangObject()
+	{
+		return currentLangObject;
 	}
 
 	private void ShuffleObjects()
@@ -54,7 +74,14 @@ public class Game : MonoBehaviour
 		objects = shuffled;
 	}
 
-	private void LogLangObjects()
+	protected void InitializeObject()
+	{
+		string path = "Models/" + currentLangObject.getModel ();
+
+		currentGameObject = Instantiate (Resources.Load (path)) as GameObject;
+	}
+
+	protected void LogLangObjects()
 	{
 		foreach (LangObject o in objects) {
 			Debug.Log(o.getName() + ", " + o.getModel());

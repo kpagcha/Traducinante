@@ -77,6 +77,15 @@
  <Reference Include="UnityEditor.Networking">
  <HintPath>C:/Users/kpagcha/Desktop/DSH/Unity/Editor/Data/UnityExtensions/Unity/Networking/Editor/UnityEditor.Networking.dll</HintPath>
  </Reference>
+ <Reference Include="LitJson">
+ <HintPath>C:/Users/kpagcha/Desktop/DSH/workspace/Traducinante/Assets/LitJson.dll</HintPath>
+ </Reference>
+ <Reference Include="Qualcomm.Vuforia.UnityExtensions.Editor">
+ <HintPath>C:/Users/kpagcha/Desktop/DSH/workspace/Traducinante/Assets/Vuforia/Editor/Scripts/Qualcomm.Vuforia.UnityExtensions.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Qualcomm.Vuforia.UnityExtensions">
+ <HintPath>C:/Users/kpagcha/Desktop/DSH/workspace/Traducinante/Assets/Vuforia/Scripts/Internal/Qualcomm.Vuforia.UnityExtensions.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEditor.Graphs">
  <HintPath>C:/Users/kpagcha/Desktop/DSH/Unity/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
  </Reference>
@@ -109,15 +118,6 @@
  </Reference>
  <Reference Include="UnityEditor.OSXStandalone.Extensions">
  <HintPath>C:/Users/kpagcha/Desktop/DSH/Unity/Editor/Data/PlaybackEngines/macstandalonesupport/UnityEditor.OSXStandalone.Extensions.dll</HintPath>
- </Reference>
- <Reference Include="Qualcomm.Vuforia.UnityExtensions">
- <HintPath>C:/Users/kpagcha/Desktop/DSH/workspace/Traducinante/Assets/Vuforia/Scripts/Internal/Qualcomm.Vuforia.UnityExtensions.dll</HintPath>
- </Reference>
- <Reference Include="Qualcomm.Vuforia.UnityExtensions.Editor">
- <HintPath>C:/Users/kpagcha/Desktop/DSH/workspace/Traducinante/Assets/Vuforia/Editor/Scripts/Qualcomm.Vuforia.UnityExtensions.Editor.dll</HintPath>
- </Reference>
- <Reference Include="LitJson">
- <HintPath>C:/Users/kpagcha/Desktop/DSH/workspace/Traducinante/Assets/LitJson.dll</HintPath>
  </Reference>
  <Reference Include="Mono.Cecil">
  <HintPath>C:/Users/kpagcha/Desktop/DSH/Unity/Editor/Data/Managed/Mono.Cecil.dll</HintPath>

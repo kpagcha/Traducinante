@@ -8,7 +8,7 @@
 			"text": "mesa",
 			"audio": "mesa_spanish.mp3"
 		},
-		"model": "mesa modelo"
+		"model": "Sofa/sofa"
 	},
 	"Silla": {
 		"English": {
@@ -19,6 +19,50 @@
 			"text": "silla",
 			"audio": "silla_spanish.mp3"
 		},
-		"model" : "silla modelo"
+		"model": "Sofa/sofa"
+	},
+	"Sofa": {
+		"English": {
+			"text": "sofa",
+			"audio": "sofa_english.mp3"
+		},
+		"Spanish": {
+			"text": "sofá",
+			"audio": "sofa_spanish.mp3"
+		},
+		"model": "Sofa/sofa"
+	},
+	"Gato": {
+		"English": {
+			"text": "cat",
+			"audio": "gato_english.mp3"
+		},
+		"Spanish": {
+			"text": "gato",
+			"audio": "gato_spanish.mp3"
+		},
+		"model": "Sofa/sofa"
+	},
+	"Perro": {
+		"English": {
+			"text": "dog",
+			"audio": "perro_english.mp3"
+		},
+		"Spanish": {
+			"text": "dog",
+			"audio": "dog_spanish.mp3"
+		},
+		"model": "Sofa/sofa"
+	},
+	"Tierra": {
+		"English": {
+			"text": "earth",
+			"audio": "tierra_english.mp3"
+		},
+		"Spanish": {
+			"text": "tierra",
+			"audio": "sofa_spanish.mp3"
+		},
+		"model": "Sofa/sofa"
 	}
 }

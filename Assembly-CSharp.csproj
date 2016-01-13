@@ -47,7 +47,6 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\EasyMode.cs" />
      <Compile Include="Assets\Scripts\Game.cs" />
-     <Compile Include="Assets\Scripts\HardMode.cs" />
      <Compile Include="Assets\Vuforia\Scripts\BackgroundPlaneBehaviour.cs" />
      <Compile Include="Assets\Vuforia\Scripts\CloudRecoBehaviour.cs" />
      <Compile Include="Assets\Vuforia\Scripts\CylinderTargetBehaviour.cs" />
@@ -101,11 +100,11 @@
  <Reference Include="UnityEngine.Networking">
  <HintPath>C:/Users/kpagcha/Desktop/DSH/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
  </Reference>
- <Reference Include="Qualcomm.Vuforia.UnityExtensions">
- <HintPath>C:/Users/kpagcha/Desktop/DSH/workspace/Traducinante/Assets/Vuforia/Scripts/Internal/Qualcomm.Vuforia.UnityExtensions.dll</HintPath>
- </Reference>
  <Reference Include="LitJson">
  <HintPath>C:/Users/kpagcha/Desktop/DSH/workspace/Traducinante/Assets/LitJson.dll</HintPath>
+ </Reference>
+ <Reference Include="Qualcomm.Vuforia.UnityExtensions">
+ <HintPath>C:/Users/kpagcha/Desktop/DSH/workspace/Traducinante/Assets/Vuforia/Scripts/Internal/Qualcomm.Vuforia.UnityExtensions.dll</HintPath>
  </Reference>
  <Reference Include="Mono.Cecil">
  <HintPath>C:/Users/kpagcha/Desktop/DSH/Unity/Editor/Data/Managed/Mono.Cecil.dll</HintPath>
