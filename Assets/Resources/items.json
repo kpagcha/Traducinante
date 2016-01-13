@@ -1,0 +1,24 @@
+{
+	"Mesa": {
+		"English": {
+			"text": "table",
+			"audio": "mesa_english.mp3"
+		},
+		"Spanish": {
+			"text": "mesa",
+			"audio": "mesa_spanish.mp3"
+		},
+		"model": "mesa modelo"
+	},
+	"Silla": {
+		"English": {
+			"text": "chair",
+			"audio": "silla_english.mp3"
+		},
+		"Spanish": {
+			"text": "silla",
+			"audio": "silla_spanish.mp3"
+		},
+		"model" : "silla modelo"
+	}
+}

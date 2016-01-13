@@ -1,0 +1,7 @@
+Base path: C:/Users/kpagcha/Desktop/DSH/Unity/Editor/Data
+Pipe name: \\.\pipe\UnityShaderCompiler-32bit-1-8676
+Cmd: getPlatforms
+Unhandled exception: Readfile from pipe failed. GLE=Ha terminado la canalización.
+
+
+Quitting shader compiler process
