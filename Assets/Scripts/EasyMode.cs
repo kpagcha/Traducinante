@@ -5,8 +5,9 @@ public class EasyMode : MonoBehaviour {
 
 	private Game game;
 	private Hashtable langItems = new Hashtable();
+    private ArrayList langItemKeys = new ArrayList();
 
-	private string selectedLang;
+    private string selectedLang;
 	private int correctAnswers;
 	private int incorrectAnswers;
 
@@ -18,7 +19,36 @@ public class EasyMode : MonoBehaviour {
 		incorrectAnswers = 0;
 
 		InitializeLangItems ();
+
+        langItemKeys =  new ArrayList(langItems.Keys);
+
+        NextQuestion();
 	}
+
+    void Update()
+    {
+
+    }
+
+    public void NextQuestion()
+    {
+        System.Random rnd = new System.Random();
+        int pos = rnd.Next(0, langItemKeys.Count - 1);
+        LangObject langObject = langItemKeys[pos] as LangObject;
+
+        game.setCurrentLangObject(langObject);
+
+        GameObject gameObject = game.InitializeObject();
+
+        game.setCurrentGameObject(gameObject);
+
+        game.LoadAudio(gameObject, langObject, selectedLang);
+        game.PlayAudio(gameObject);
+
+        game.InitializeChoices((ArrayList)langItems[langObject]);
+
+        langItemKeys.RemoveAt(pos);
+    }
 
 	private void InitializeLangItems()
 	{
@@ -35,8 +65,6 @@ public class EasyMode : MonoBehaviour {
 
             allObjects.RemoveAt(pos);
         }
-
-        LogChoices();
     }
 
     private ArrayList GenerateChoices(LangObject o)
@@ -68,20 +96,5 @@ public class EasyMode : MonoBehaviour {
         }
 
         return game.Shuffle(choices);
-    }
-
-    private void LogChoices()
-    {
-        foreach (DictionaryEntry item in langItems)
-        {
-            string s = "";
-            ArrayList choices = item.Value as ArrayList;
-            foreach (string choice in choices)
-            {
-                s += choice + " ";
-            }
-            LangObject it = item.Key as LangObject;
-            Debug.Log(it.getName() + " -> " + s);
-        }
     }
 }

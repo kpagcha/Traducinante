@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.IO;
 using LitJson;
@@ -7,7 +8,7 @@ public class Game : MonoBehaviour
 {
 	private ArrayList objects = new ArrayList();
 	private GameObject currentGameObject;
-	private LangObject currentLangObject;
+    private LangObject currentLangObject;
 	public int numberOfQuestions = 5;
     public int numberOfChoices = 4;
 	
@@ -38,21 +39,58 @@ public class Game : MonoBehaviour
 		}
 
 		objects = Shuffle (objects);
-
-		currentLangObject = objects [0] as LangObject;
-
-		InitializeObject ();
 	}
 
-	public ArrayList getObjects()
+
+    public GameObject InitializeObject()
+    {
+        string path = "Models/" + currentLangObject.getModel();
+
+        GameObject gameObject = Instantiate(Resources.Load(path)) as GameObject;
+        gameObject.transform.parent = GameObject.Find("ImageTarget").transform;
+
+        AudioSource audioSource = gameObject.AddComponent<AudioSource>();
+
+        return gameObject;
+    }
+
+    public void DestroyObject()
+    {
+        Destroy(currentGameObject);
+    }
+
+    public void InitializeChoices(ArrayList choices)
+    {
+        for (int i = 0; i < choices.Count; i++)
+            GameObject.Find("TextChoice" + (i + 1)).GetComponent<Text>().text = choices[i].ToString();
+    }
+
+    public bool CheckAnswer(LangObject langObject, string answer, string language)
+    {
+        string correctAnswer = langObject.getLang(language)["text"].ToString();
+
+        return answer == correctAnswer;
+    }
+
+    public ArrayList getObjects()
 	{
 		return objects;
 	}
+
+    public void setCurrentGameObject(GameObject gameObject)
+    {
+        currentGameObject = gameObject;
+    }
 
 	public GameObject getCurrentGameObject()
 	{
 		return currentGameObject;
 	}
+
+    public void setCurrentLangObject(LangObject langObject)
+    {
+        currentLangObject = langObject;
+    }
 
 	public LangObject getCurrentLangObject()
 	{
@@ -75,28 +113,18 @@ public class Game : MonoBehaviour
 		return shuffled;
     }
 
-	protected void InitializeObject()
-	{
-		string path = "Models/" + currentLangObject.getModel ();
+    public void LoadAudio(GameObject gameObject, LangObject langObject, string lang)
+    {
+        string audioPath = "Audios/" + langObject.getLang(lang)["audio"].ToString();
+        AudioSource audioSource = gameObject.GetComponent<AudioSource>();
+        audioSource.clip = Resources.Load(audioPath) as AudioClip;
+    }
 
-		currentGameObject = Instantiate (Resources.Load (path)) as GameObject;
-	}
-
-	protected void LogLangObjects()
-	{
-		foreach (LangObject o in objects) {
-			Debug.Log(o.getName() + ", " + o.getModel());
-			Hashtable ht1 = o.getLang("English");
-			Hashtable ht2 = o.getLang("Spanish");
-			foreach (string s in ht1.Values) {
-				Debug.Log(s);
-			}
-			foreach (string s in ht2.Values) {
-				Debug.Log(s);
-			}
-			Debug.Log("---------------");
-		}
-	}
+    public void PlayAudio(GameObject gameObject)
+    {
+        AudioSource audioSource = gameObject.GetComponent<AudioSource>();
+        audioSource.Play();
+    }
 }
 
 public class LangObject
