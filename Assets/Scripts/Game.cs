@@ -7,8 +7,10 @@ using LitJson;
 public class Game : MonoBehaviour
 {
 	private ArrayList objects = new ArrayList();
+
 	private GameObject currentGameObject;
     private LangObject currentLangObject;
+
 	public int numberOfQuestions = 5;
     public int numberOfChoices = 4;
 	
@@ -61,13 +63,6 @@ public class Game : MonoBehaviour
     {
         for (int i = 0; i < choices.Count; i++)
             GameObject.Find("TextChoice" + (i + 1)).GetComponent<Text>().text = choices[i].ToString();
-    }
-
-    public bool CheckAnswer(LangObject langObject, string language, string answer)
-    {
-        string correctAnswer = langObject.getLang(language)["text"].ToString();
-
-        return answer == correctAnswer;
     }
 
     public ArrayList getObjects()
@@ -161,4 +156,9 @@ public class LangObject
 	{
 		return hash [lang] as Hashtable;
 	}
+
+    public ArrayList getLangs()
+    {
+        return hash.Values as ArrayList;
+    }
 }

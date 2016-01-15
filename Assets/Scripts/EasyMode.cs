@@ -64,7 +64,7 @@ public class EasyMode : MonoBehaviour {
             if (four)
                 answer = GameObject.Find("TextChoice4").GetComponent<Text>().text.ToString();
 
-            bool isCorrect = game.CheckAnswer(game.getCurrentLangObject(), selectedLang, answer);
+            bool isCorrect = CheckAnswer(game.getCurrentLangObject(), answer);
             UpdateScore(isCorrect);
 
             if (isCorrect)
@@ -100,6 +100,13 @@ public class EasyMode : MonoBehaviour {
         alreadyAnswered = false;
 
         langItemKeys.RemoveAt(pos);
+    }
+
+    private bool CheckAnswer(LangObject langObject, string answer)
+    {
+        string correctAnswer = langObject.getLang(selectedLang)["text"].ToString();
+
+        return answer == correctAnswer;
     }
 
     public string GetSelectedLang()
@@ -188,12 +195,6 @@ public class EasyMode : MonoBehaviour {
             choices.Add(wrongAnswer);
 
             allObjects.RemoveAt(pos);
-        }
-
-        string debug = "Choices for " + o.getName() + ": ";
-        for (int i = 0; i < choices.Count; i++)
-        {
-            debug += choices[i] + " ";
         }
 
         return game.Shuffle(choices);
