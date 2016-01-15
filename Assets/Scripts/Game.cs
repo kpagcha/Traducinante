@@ -14,7 +14,7 @@ public class Game : MonoBehaviour
 	
 	void Start ()
 	{
-		string jsonString = File.ReadAllText (Application.dataPath + "/Resources/items.json");
+        string jsonString = File.ReadAllText (Application.dataPath + "/Resources/items.json");
 		JsonData jsonData = JsonMapper.ToObject (jsonString);
 
 		foreach (DictionaryEntry item in jsonData) {
@@ -25,10 +25,12 @@ public class Game : MonoBehaviour
 
 			LangObject langObject = new LangObject(key, model);
 
-			foreach (DictionaryEntry langItem in itemJson) {
+			foreach (DictionaryEntry langItem in itemJson)
+            {
 				string lang = langItem.Key as string;
 
-				if (lang != "model")  {
+				if (lang != "model")
+                {
 					string text = itemJson[lang]["text"].ToString();
 					string audio = itemJson[lang]["audio"].ToString();
 					langObject.addLang(lang, text, audio);
@@ -41,22 +43,18 @@ public class Game : MonoBehaviour
 		objects = Shuffle (objects);
 	}
 
-
     public GameObject InitializeObject()
     {
         string path = "Models/" + currentLangObject.getModel();
 
         GameObject gameObject = Instantiate(Resources.Load(path)) as GameObject;
         gameObject.transform.parent = GameObject.Find("ImageTarget").transform;
+        gameObject.transform.position = new Vector3(0f, 0f, 0f);
+        gameObject.transform.localScale = new Vector3(0.06447458f, 0.06447458f, 0.06447458f);
 
         AudioSource audioSource = gameObject.AddComponent<AudioSource>();
 
         return gameObject;
-    }
-
-    public void DestroyObject()
-    {
-        Destroy(currentGameObject);
     }
 
     public void InitializeChoices(ArrayList choices)
@@ -65,7 +63,7 @@ public class Game : MonoBehaviour
             GameObject.Find("TextChoice" + (i + 1)).GetComponent<Text>().text = choices[i].ToString();
     }
 
-    public bool CheckAnswer(LangObject langObject, string answer, string language)
+    public bool CheckAnswer(LangObject langObject, string language, string answer)
     {
         string correctAnswer = langObject.getLang(language)["text"].ToString();
 
@@ -79,6 +77,7 @@ public class Game : MonoBehaviour
 
     public void setCurrentGameObject(GameObject gameObject)
     {
+        Destroy(currentGameObject);
         currentGameObject = gameObject;
     }
 
@@ -104,7 +103,8 @@ public class Game : MonoBehaviour
 			
 		System.Random rnd = new System.Random ();
 
-		while (tmp.Count != 0) {
+		while (tmp.Count != 0)
+        {
             int i = rnd.Next(0, tmp.Count - 1);
 			shuffled.Add(tmp[i]);
 			tmp.RemoveAt(i);

@@ -47,7 +47,8 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\EasyMode.cs" />
      <Compile Include="Assets\Scripts\Game.cs" />
-     <Compile Include="Assets\Scripts\VirtualButtonEventHandler.cs" />
+     <Compile Include="Assets\Scripts\HardMode.cs" />
+     <Compile Include="Assets\Scripts\VirtualButtonEventHandlerEasyMode.cs" />
      <Compile Include="Assets\Vuforia\Scripts\BackgroundPlaneBehaviour.cs" />
      <Compile Include="Assets\Vuforia\Scripts\CloudRecoBehaviour.cs" />
      <Compile Include="Assets\Vuforia\Scripts\CylinderTargetBehaviour.cs" />
