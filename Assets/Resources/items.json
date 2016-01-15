@@ -6,7 +6,7 @@
 		},
 		"Spanish": {
 			"text": "mesa",
-			"audio": "sample"
+			"audio": "mesa"
 		},
 		"model": "Sofa/sofa"
 	},
@@ -17,7 +17,7 @@
 		},
 		"Spanish": {
 			"text": "silla",
-			"audio": "sample"
+			"audio": "silla"
 		},
 		"model": "Sofa/sofa"
 	},
@@ -28,7 +28,7 @@
 		},
 		"Spanish": {
 			"text": "sofá",
-			"audio": "sample"
+			"audio": "sofa"
 		},
 		"model": "Sofa/sofa"
 	},
@@ -39,7 +39,7 @@
 		},
 		"Spanish": {
 			"text": "gato",
-			"audio": "sample"
+			"audio": "gato"
 		},
 		"model": "Sofa/sofa"
 	},
@@ -50,7 +50,7 @@
 		},
 		"Spanish": {
 			"text": "perro",
-			"audio": "sample"
+			"audio": "perro"
 		},
 		"model": "Sofa/sofa"
 	},
@@ -61,7 +61,7 @@
 		},
 		"Spanish": {
 			"text": "tierra",
-			"audio": "sample"
+			"audio": "tierra"
 		},
 		"model": "Sofa/sofa"
 	}

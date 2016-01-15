@@ -11,6 +11,7 @@ public class EasyMode : MonoBehaviour {
     private string selectedLang;
 	private int correctAnswers;
 	private int incorrectAnswers;
+    private bool alreadyAnswered;
 
 	void Start()
 	{
@@ -31,6 +32,17 @@ public class EasyMode : MonoBehaviour {
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            if (langItemKeys.Count > 0)
+            {
+                if (alreadyAnswered)
+                    NextQuestion();
+            } 
+            else
+                FinishLevel();
+        }
+
         bool one = Input.GetKeyDown("1");
         bool two = Input.GetKeyDown("2");
         bool three = Input.GetKeyDown("3");
@@ -52,23 +64,23 @@ public class EasyMode : MonoBehaviour {
             if (four)
                 answer = GameObject.Find("TextChoice4").GetComponent<Text>().text.ToString();
 
-            UpdateScore(game.CheckAnswer(game.getCurrentLangObject(), selectedLang, answer));
+            bool isCorrect = game.CheckAnswer(game.getCurrentLangObject(), selectedLang, answer);
+            UpdateScore(isCorrect);
 
-            if (langItemKeys.Count > 0)
-            {
-                NextQuestion();
-            }
+            if (isCorrect)
+                GameObject.Find("CorrectMsg").GetComponent<Text>().text = "¡CORRECTO!";
             else
-            {
-                FinishLevel();
-            }
+                GameObject.Find("IncorrectMsg").GetComponent<Text>().text = "INCORRECTO...";
+
+            alreadyAnswered = true;
         }
     }
 
     public void NextQuestion()
     {
         System.Random rnd = new System.Random();
-        int pos = rnd.Next(0, langItemKeys.Count - 1);
+        int pos = rnd.Next(0, langItemKeys.Count);
+        
         LangObject langObject = langItemKeys[pos] as LangObject;
 
         game.setCurrentLangObject(langObject);
@@ -80,7 +92,12 @@ public class EasyMode : MonoBehaviour {
         game.LoadAudio(gameObject, langObject, selectedLang);
         game.PlayAudio(gameObject);
 
-        game.InitializeChoices((ArrayList)langItems[langObject]);
+        game.InitializeChoicesText((ArrayList)langItems[langObject]);
+
+        GameObject.Find("CorrectMsg").GetComponent<Text>().text = "";
+        GameObject.Find("IncorrectMsg").GetComponent<Text>().text = "";
+
+        alreadyAnswered = false;
 
         langItemKeys.RemoveAt(pos);
     }
@@ -132,7 +149,7 @@ public class EasyMode : MonoBehaviour {
         System.Random rnd = new System.Random ();
 		for (int i = 0; i < game.numberOfQuestions; i++)
         {
-            int pos = rnd.Next(0, allObjects.Count - 1);
+            int pos = rnd.Next(0, allObjects.Count);
 
             LangObject langObject = allObjects[pos] as LangObject;
 
@@ -163,7 +180,7 @@ public class EasyMode : MonoBehaviour {
         System.Random rnd = new System.Random();
         for (int i = 0; i < game.numberOfChoices - 1; i++)
         {
-            int pos = rnd.Next(0, allObjects.Count - 1);
+            int pos = rnd.Next(0, allObjects.Count);
 
             LangObject langObject = allObjects[pos] as LangObject;
 
@@ -171,6 +188,12 @@ public class EasyMode : MonoBehaviour {
             choices.Add(wrongAnswer);
 
             allObjects.RemoveAt(pos);
+        }
+
+        string debug = "Choices for " + o.getName() + ": ";
+        for (int i = 0; i < choices.Count; i++)
+        {
+            debug += choices[i] + " ";
         }
 
         return game.Shuffle(choices);

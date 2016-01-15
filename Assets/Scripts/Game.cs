@@ -57,7 +57,7 @@ public class Game : MonoBehaviour
         return gameObject;
     }
 
-    public void InitializeChoices(ArrayList choices)
+    public void InitializeChoicesText(ArrayList choices)
     {
         for (int i = 0; i < choices.Count; i++)
             GameObject.Find("TextChoice" + (i + 1)).GetComponent<Text>().text = choices[i].ToString();
@@ -99,18 +99,19 @@ public class Game : MonoBehaviour
 	public ArrayList Shuffle(ArrayList list)
 	{
 		ArrayList tmp = list.Clone() as ArrayList;
-		ArrayList shuffled = new ArrayList();
 			
 		System.Random rnd = new System.Random ();
 
-		while (tmp.Count != 0)
+        for (int i = 0; i < 100000; i++)
         {
-            int i = rnd.Next(0, tmp.Count - 1);
-			shuffled.Add(tmp[i]);
-			tmp.RemoveAt(i);
-		}
+            var i1 = rnd.Next(tmp.Count);
+            var i2 = rnd.Next(tmp.Count);
 
-		return shuffled;
+            var eTemp = tmp[i1];
+            tmp[i1] = tmp[i2];
+            tmp[i2] = eTemp;
+        }
+        return tmp;
     }
 
     public void LoadAudio(GameObject gameObject, LangObject langObject, string lang)
