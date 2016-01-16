@@ -6,7 +6,7 @@ using LitJson;
 
 public class Game : MonoBehaviour
 {
-	private ArrayList objects = new ArrayList();
+	private static ArrayList objects = new ArrayList();
 
 	private GameObject currentGameObject;
     private LangObject currentLangObject;
@@ -16,33 +16,37 @@ public class Game : MonoBehaviour
 	
 	void Start ()
 	{
-        string jsonString = File.ReadAllText (Application.dataPath + "/Resources/items.json");
-		JsonData jsonData = JsonMapper.ToObject (jsonString);
+        if (objects.Count == 0)
+        {
+            string jsonString = File.ReadAllText(Application.dataPath + "/Resources/items.json");
+            JsonData jsonData = JsonMapper.ToObject(jsonString);
 
-		foreach (DictionaryEntry item in jsonData) {
-			string key = item.Key as string;
-			JsonData itemJson = item.Value as JsonData;
-
-			string model = itemJson["model"].ToString() as string;
-
-			LangObject langObject = new LangObject(key, model);
-
-			foreach (DictionaryEntry langItem in itemJson)
+            foreach (DictionaryEntry item in jsonData)
             {
-				string lang = langItem.Key as string;
+                string key = item.Key as string;
+                JsonData itemJson = item.Value as JsonData;
 
-				if (lang != "model")
+                string model = itemJson["model"].ToString() as string;
+
+                LangObject langObject = new LangObject(key, model);
+
+                foreach (DictionaryEntry langItem in itemJson)
                 {
-					string text = itemJson[lang]["text"].ToString();
-					string audio = itemJson[lang]["audio"].ToString();
-					langObject.addLang(lang, text, audio);
-				}
-			}
+                    string lang = langItem.Key as string;
 
-			objects.Add(langObject);
-		}
+                    if (lang != "model")
+                    {
+                        string text = itemJson[lang]["text"].ToString();
+                        string audio = itemJson[lang]["audio"].ToString();
+                        langObject.addLang(lang, text, audio);
+                    }
+                }
 
-		objects = Shuffle (objects);
+                objects.Add(langObject);
+            }
+
+            objects = Shuffle(objects);
+        }
 	}
 
     public GameObject InitializeObject()
@@ -154,10 +158,15 @@ public class LangObject
 	
 	public Hashtable getLang(string lang)
 	{
-		return hash [lang] as Hashtable;
+		return hash[lang] as Hashtable;
 	}
 
     public ArrayList getLangs()
+    {
+        return new ArrayList(hash.Keys);
+    }
+
+    public ArrayList getLangValues()
     {
         return hash.Values as ArrayList;
     }

@@ -2,66 +2,90 @@
 	"Mesa": {
 		"English": {
 			"text": "table",
-			"audio": "sample"
+			"audio": "table"
 		},
 		"Spanish": {
 			"text": "mesa",
 			"audio": "mesa"
+		},
+		"Russian": {
+			"text": "стол",
+			"audio": "стол"
 		},
 		"model": "Sofa/sofa"
 	},
 	"Silla": {
 		"English": {
 			"text": "chair",
-			"audio": "sample"
+			"audio": "chair"
 		},
 		"Spanish": {
 			"text": "silla",
 			"audio": "silla"
 		},
+		"Russian": {
+			"text": "стул",
+			"audio": "стул"
+		},
 		"model": "Sofa/sofa"
 	},
 	"Sofa": {
 		"English": {
-			"text": "sofa",
-			"audio": "sample"
+			"text": "couch",
+			"audio": "couch"
 		},
 		"Spanish": {
 			"text": "sofá",
 			"audio": "sofa"
+		},
+		"Russian": {
+			"text": "диван",
+			"audio": "диван"
 		},
 		"model": "Sofa/sofa"
 	},
 	"Gato": {
 		"English": {
 			"text": "cat",
-			"audio": "sample"
+			"audio": "cat"
 		},
 		"Spanish": {
 			"text": "gato",
 			"audio": "gato"
+		},
+		"Russian": {
+			"text": "кошка",
+			"audio": "кошка"
 		},
 		"model": "Sofa/sofa"
 	},
 	"Perro": {
 		"English": {
 			"text": "dog",
-			"audio": "sample"
+			"audio": "dog"
 		},
 		"Spanish": {
 			"text": "perro",
 			"audio": "perro"
+		},
+		"Russian": {
+			"text": "собака",
+			"audio": "собака"
 		},
 		"model": "Sofa/sofa"
 	},
 	"Tierra": {
 		"English": {
 			"text": "earth",
-			"audio": "sample"
+			"audio": "earth"
 		},
 		"Spanish": {
 			"text": "tierra",
 			"audio": "tierra"
+		},
+		"Russian": {
+			"text": "земля",
+			"audio": "земля"
 		},
 		"model": "Sofa/sofa"
 	}

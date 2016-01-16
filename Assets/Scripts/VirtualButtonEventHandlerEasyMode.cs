@@ -49,7 +49,7 @@ public class VirtualButtonEventHandlerEasyMode : MonoBehaviour,
         LangObject langObject = game.getCurrentLangObject();
         string lang = easyMode.GetSelectedLang();
 
-        easyMode.UpdateScore(game.CheckAnswer(langObject, lang, answer));
+        easyMode.UpdateScore(easyMode.CheckAnswer(langObject, answer));
 
         if (easyMode.AreThereMoreQuestions())
         {

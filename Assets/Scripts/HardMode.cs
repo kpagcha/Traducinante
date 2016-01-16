@@ -8,6 +8,7 @@ public class HardMode : MonoBehaviour {
     private Hashtable langItems = new Hashtable();
     private ArrayList langItemKeys = new ArrayList();
     private Hashtable correctAnswersHash = new Hashtable();
+    private Hashtable selectedLangs = new Hashtable();
 
     private int correctAnswers;
     private int incorrectAnswers;
@@ -15,19 +16,16 @@ public class HardMode : MonoBehaviour {
 
     void Start()
     {
-        if (langItemKeys.Count == 0)
-        {
-            game = GameObject.Find("_GameController").GetComponent<Game>();
+        game = GameObject.Find("_GameController").GetComponent<Game>();
 
-            correctAnswers = 0;
-            incorrectAnswers = 0;
+        correctAnswers = 0;
+        incorrectAnswers = 0;
 
-            InitializeLangItems();
+        InitializeLangItems();
 
-            langItemKeys = new ArrayList(langItems.Keys);
+        langItemKeys = new ArrayList(langItems.Keys);
 
-            NextQuestion();
-        }
+        NextQuestion();
     }
 
     void Update()
@@ -89,7 +87,7 @@ public class HardMode : MonoBehaviour {
 
         game.setCurrentGameObject(gameObject);
 
-        game.LoadAudio(gameObject, langObject, langStr);
+        game.LoadAudio(gameObject, langObject, (string)selectedLangs[langObject]);
         game.PlayAudio(gameObject);
 
         game.InitializeChoicesText((ArrayList)langItems[langObject]);
@@ -104,16 +102,7 @@ public class HardMode : MonoBehaviour {
 
     private bool CheckAnswer(LangObject langObject, string answer)
     {
-        ArrayList langs = langObject.getLangs();
-
-        for (int i = 0; i < langs.Count; i++)
-        {
-            Hashtable lang = langs[i] as Hashtable;
-            if (lang["text"].ToString() == answer)
-                return true;
-        }
-
-        return false;
+        return (string)correctAnswersHash[langObject] == answer;
     }
 
     public void UpdateScore(bool isAnswerCorrect)
@@ -163,9 +152,12 @@ public class HardMode : MonoBehaviour {
             LangObject langObject = allObjects[pos] as LangObject;
 
             ArrayList langs = langObject.getLangs() as ArrayList;
-            string correctAnswer = langObject.getLang((string)langs[rnd.Next(0, langs.Count)])["text"] as string;
+
+            string randomLang = langs[rnd.Next(0, langs.Count)] as string;
+            string correctAnswer = langObject.getLang(randomLang)["text"] as string;
 
             correctAnswersHash.Add(langObject, correctAnswer);
+            selectedLangs.Add(langObject, randomLang);
 
             ArrayList choices = GenerateChoices(langObject);
             langItems.Add(langObject, choices);
@@ -177,14 +169,13 @@ public class HardMode : MonoBehaviour {
     private ArrayList GenerateChoices(LangObject o)
     {
         ArrayList allObjects = game.getObjects().Clone() as ArrayList;
+        ArrayList langs = o.getLangs() as ArrayList;
+
         ArrayList choices = new ArrayList();
 
-        System.Random rnd = new System.Random();
-
-        ArrayList langs = o.getLangs() as ArrayList;
-        string correctAnswer = o.getLang((string)langs[rnd.Next(0, langs.Count)])["text"] as string;
         choices.Add(correctAnswersHash[o]);
 
+        System.Random rnd = new System.Random();
         for (int i = 0; i < allObjects.Count; i++)
         {
             LangObject x = allObjects[i] as LangObject;

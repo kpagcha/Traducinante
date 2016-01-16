@@ -15,19 +15,17 @@ public class EasyMode : MonoBehaviour {
 
 	void Start()
 	{
-        if (langItemKeys.Count == 0)
-        {
-            game = GameObject.Find("_GameController").GetComponent<Game>();
-            selectedLang = "Spanish";
-            correctAnswers = 0;
-            incorrectAnswers = 0;
+        game = GameObject.Find("_GameController").GetComponent<Game>();
 
-            InitializeLangItems();
+        selectedLang = "Russian";
+        correctAnswers = 0;
+        incorrectAnswers = 0;
 
-            langItemKeys = new ArrayList(langItems.Keys);
+        InitializeLangItems();
 
-            NextQuestion();
-        }
+        langItemKeys = new ArrayList(langItems.Keys);
+
+        NextQuestion();
     }
 
     void Update()
@@ -102,7 +100,7 @@ public class EasyMode : MonoBehaviour {
         langItemKeys.RemoveAt(pos);
     }
 
-    private bool CheckAnswer(LangObject langObject, string answer)
+    public bool CheckAnswer(LangObject langObject, string answer)
     {
         string correctAnswer = langObject.getLang(selectedLang)["text"].ToString();
 
