@@ -12,6 +12,7 @@ public class EasyMode : MonoBehaviour {
 	private int correctAnswers;
 	private int incorrectAnswers;
     private bool alreadyAnswered;
+    private bool gameFinished = false;
 
 	void Start()
 	{
@@ -32,45 +33,53 @@ public class EasyMode : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            if (langItemKeys.Count > 0)
-            {
-                if (alreadyAnswered)
-                    NextQuestion();
-            } 
+            if (gameFinished)
+                Application.LoadLevel("EasyMode");
             else
-                FinishLevel();
+            {
+                if (langItemKeys.Count > 0)
+                {
+                    if (alreadyAnswered)
+                        NextQuestion();
+                }
+                else
+                    FinishLevel();
+            }
         }
 
-        bool one = Input.GetKeyDown("1");
-        bool two = Input.GetKeyDown("2");
-        bool three = Input.GetKeyDown("3");
-        bool four = Input.GetKeyDown("4");
-
-        if (one || two || three || four)
+        if (!alreadyAnswered)
         {
-            string answer = "";
+            bool one = Input.GetKeyDown("1");
+            bool two = Input.GetKeyDown("2");
+            bool three = Input.GetKeyDown("3");
+            bool four = Input.GetKeyDown("4");
 
-            if (one)
-                answer = GameObject.Find("TextChoice1").GetComponent<Text>().text.ToString();
+            if (one || two || three || four)
+            {
+                string answer = "";
 
-            if (two)
-                answer = GameObject.Find("TextChoice2").GetComponent<Text>().text.ToString();
+                if (one)
+                    answer = GameObject.Find("TextChoice1").GetComponent<Text>().text.ToString();
 
-            if (three)
-                answer = GameObject.Find("TextChoice3").GetComponent<Text>().text.ToString();
+                if (two)
+                    answer = GameObject.Find("TextChoice2").GetComponent<Text>().text.ToString();
 
-            if (four)
-                answer = GameObject.Find("TextChoice4").GetComponent<Text>().text.ToString();
+                if (three)
+                    answer = GameObject.Find("TextChoice3").GetComponent<Text>().text.ToString();
 
-            bool isCorrect = CheckAnswer(game.getCurrentLangObject(), answer);
-            UpdateScore(isCorrect);
+                if (four)
+                    answer = GameObject.Find("TextChoice4").GetComponent<Text>().text.ToString();
 
-            if (isCorrect)
-                GameObject.Find("CorrectMsg").GetComponent<Text>().text = "¡CORRECTO!";
-            else
-                GameObject.Find("IncorrectMsg").GetComponent<Text>().text = "INCORRECTO...";
+                bool isCorrect = CheckAnswer(game.getCurrentLangObject(), answer);
+                UpdateScore(isCorrect);
 
-            alreadyAnswered = true;
+                if (isCorrect)
+                    GameObject.Find("CorrectMsg").GetComponent<Text>().text = "¡CORRECTO!";
+                else
+                    GameObject.Find("IncorrectMsg").GetComponent<Text>().text = "INCORRECTO...";
+
+                alreadyAnswered = true;
+            }
         }
     }
 
@@ -119,6 +128,8 @@ public class EasyMode : MonoBehaviour {
         else
             incorrectAnswers++;
 
+        Debug.Log("CORRECT/INCORRECT " + correctAnswers + "/" + incorrectAnswers);
+
         GameObject.Find("Correct").GetComponent<Text>().text = "ACIERTOS: " + correctAnswers;
         GameObject.Find("Incorrect").GetComponent<Text>().text = "FALLOS: " + incorrectAnswers;
     }
@@ -140,11 +151,16 @@ public class EasyMode : MonoBehaviour {
 
     public void FinishLevel()
     {
-        // POR HACER: mostrar pantalla resumen y con botones para repetir nivel o ir al menú principal
+        game.GameFinishedScreen(correctAnswers, correctAnswers + incorrectAnswers);
 
+        gameFinished = true;
         correctAnswers = 0;
         incorrectAnswers = 0;
-        Application.LoadLevel("EasyMode"); // TEMPORAL
+    }
+
+    public void PlayAgain()
+    {
+        Application.LoadLevel("EasyMode");
     }
 
     private void InitializeLangItems()

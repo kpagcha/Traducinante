@@ -13,6 +13,8 @@ public class Game : MonoBehaviour
 
 	public int numberOfQuestions = 5;
     public int numberOfChoices = 4;
+
+    private GameObject gameFinishedCanvas;
 	
 	void Start ()
 	{
@@ -47,16 +49,22 @@ public class Game : MonoBehaviour
 
             objects = Shuffle(objects);
         }
-	}
+
+        gameFinishedCanvas = GameObject.Find("GameFinishedCanvas");
+
+        //GameObject.Find("GameFinishedText").GetComponent<Text>().text = "";
+        //GameObject.Find("Score").GetComponent<Text>().text = "";
+        //GameObject.Find("ScoreMsg").GetComponent<Text>().text = "";
+        HideGameFinishedCanvas();
+    }
 
     public GameObject InitializeObject()
     {
-        string path = "Models/" + currentLangObject.getModel();
+        string path = "Prefabs/" + currentLangObject.getModel();
 
         GameObject gameObject = Instantiate(Resources.Load(path)) as GameObject;
         gameObject.transform.parent = GameObject.Find("ImageTarget").transform;
-        gameObject.transform.position = new Vector3(0f, 0f, 0f);
-        gameObject.transform.localScale = new Vector3(0.06447458f, 0.06447458f, 0.06447458f);
+        gameObject.transform.position = new Vector3(0f, 0.1f, 0f);
 
         AudioSource audioSource = gameObject.AddComponent<AudioSource>();
 
@@ -124,6 +132,40 @@ public class Game : MonoBehaviour
     {
         AudioSource audioSource = gameObject.GetComponent<AudioSource>();
         audioSource.Play();
+    }
+
+    public void GameFinishedScreen(int correctAnswers, int totalAnswers)
+    {
+        gameFinishedCanvas.SetActive(true);
+
+        GameObject.Find("GameFinishedText").GetComponent<Text>().text = "FIN DEL JUEGO";
+        GameObject.Find("Score").GetComponent<Text>().text = correctAnswers + " de " + totalAnswers + " aciertos";
+
+        string msg = "";
+
+        if (correctAnswers == 0)
+            msg = "No has dado ni una";
+        else if (correctAnswers == totalAnswers)
+            msg = "¡¡PERFECTO!!";
+        else
+        {
+            float correctRelation = 100f * correctAnswers / (float)totalAnswers;
+            msg = "Así así";
+        }
+        GameObject.Find("ScoreMsg").GetComponent<Text>().text = msg;
+
+        for (int i = 0; i < 4; i++)
+            GameObject.Find("TextChoice" + (i + 1)).GetComponent<Text>().text = "";
+
+        GameObject.Find("Correct").GetComponent<Text>().text = "";
+        GameObject.Find("Incorrect").GetComponent<Text>().text = "";
+        GameObject.Find("CorrectMsg").GetComponent<Text>().text = "";
+        GameObject.Find("IncorrectMsg").GetComponent<Text>().text = "";
+    }
+
+    private void HideGameFinishedCanvas()
+    {
+        gameFinishedCanvas.SetActive(false);
     }
 }
 

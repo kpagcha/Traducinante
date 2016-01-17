@@ -12,7 +12,7 @@
 			"text": "стол",
 			"audio": "стол"
 		},
-		"model": "Sofa/sofa"
+		"model": "sofa"
 	},
 	"Silla": {
 		"English": {
@@ -27,7 +27,7 @@
 			"text": "стул",
 			"audio": "стул"
 		},
-		"model": "Sofa/sofa"
+		"model": "sofa"
 	},
 	"Sofa": {
 		"English": {
@@ -42,7 +42,7 @@
 			"text": "диван",
 			"audio": "диван"
 		},
-		"model": "Sofa/sofa"
+		"model": "sofa"
 	},
 	"Gato": {
 		"English": {
@@ -57,7 +57,7 @@
 			"text": "кошка",
 			"audio": "кошка"
 		},
-		"model": "Sofa/sofa"
+		"model": "sofa"
 	},
 	"Perro": {
 		"English": {
@@ -72,7 +72,7 @@
 			"text": "собака",
 			"audio": "собака"
 		},
-		"model": "Sofa/sofa"
+		"model": "sofa"
 	},
 	"Tierra": {
 		"English": {
@@ -87,6 +87,6 @@
 			"text": "земля",
 			"audio": "земля"
 		},
-		"model": "Sofa/sofa"
+		"model": "sofa"
 	}
 }
