@@ -65,8 +65,13 @@ public class Game : MonoBehaviour
         string path = "Prefabs/" + currentLangObject.getModel();
 
         GameObject gameObject = Instantiate(Resources.Load(path)) as GameObject;
-        gameObject.transform.parent = GameObject.Find("ImageTarget").transform;
-        gameObject.transform.position = new Vector3(0f, 0.1f, 0f);
+        //gameObject.transform.parent = GameObject.Find("ImageTarget").transform;
+        //gameObject.transform.position = new Vector3(0f, 0.1f, 0f);
+
+        // AÑADIDO PARA PROBAR MODELOS EN PC. BORRAR CUANDO ESTE TODO TERMINADO
+        // Y DESCOMENTAR LAS DOS LINEAS DE ARRIBA
+        gameObject.transform.parent = GameObject.Find("GameObject").transform;
+        // -----
 
         AudioSource audioSource = gameObject.AddComponent<AudioSource>();
 

@@ -8,11 +8,15 @@
 			"text": "mesa",
 			"audio": "mesa"
 		},
+		"German": {
+			"text": "Tisch",
+			"audio": "tisch"
+		},
 		"Russian": {
 			"text": "стол",
 			"audio": "стол"
 		},
-		"model": "sofa"
+		"model": "mesa"
 	},
 	"Silla": {
 		"English": {
@@ -23,11 +27,15 @@
 			"text": "silla",
 			"audio": "silla"
 		},
+		"German": {
+			"text": "Sessel",
+			"audio": "sessel"
+		},
 		"Russian": {
 			"text": "стул",
 			"audio": "стул"
 		},
-		"model": "sofa"
+		"model": "silla"
 	},
 	"Sofa": {
 		"English": {
@@ -37,6 +45,10 @@
 		"Spanish": {
 			"text": "sofá",
 			"audio": "sofa"
+		},
+		"German": {
+			"text": "Sofa",
+			"audio": "sofa_de"
 		},
 		"Russian": {
 			"text": "диван",
@@ -53,11 +65,15 @@
 			"text": "gato",
 			"audio": "gato"
 		},
+		"German": {
+			"text": "Katze",
+			"audio": "katze"
+		},
 		"Russian": {
 			"text": "кошка",
 			"audio": "кошка"
 		},
-		"model": "sofa"
+		"model": "gato"
 	},
 	"Perro": {
 		"English": {
@@ -68,11 +84,15 @@
 			"text": "perro",
 			"audio": "perro"
 		},
+		"German": {
+			"text": "Hund",
+			"audio": "hund"
+		},
 		"Russian": {
 			"text": "собака",
 			"audio": "собака"
 		},
-		"model": "sofa"
+		"model": "perro"
 	},
 	"Tierra": {
 		"English": {
@@ -83,10 +103,71 @@
 			"text": "tierra",
 			"audio": "tierra"
 		},
+		"German": {
+			"text": "Erde",
+			"audio": "erde"
+		},
 		"Russian": {
 			"text": "земля",
 			"audio": "земля"
 		},
-		"model": "sofa"
+		"model": "tierra"
+	},
+	"Manzana": {
+		"English": {
+			"text": "apple",
+			"audio": "apple"
+		},
+		"Spanish": {
+			"text": "manzana",
+			"audio": "manzana"
+		},
+		"German": {
+			"text": "Apfel",
+			"audio": "apfel"
+		},
+		"Russian": {
+			"text": "яблоко",
+			"audio": "яблоко"
+		},
+		"model": "manzana"
+	},
+	"Calabaza": {
+		"English": {
+			"text": "pumpkin",
+			"audio": "pumpkin"
+		},
+		"Spanish": {
+			"text": "calabaza",
+			"audio": "calabaza"
+		},
+		"German": {
+			"text": "Kürbis",
+			"audio": "kurbis"
+		},
+		"Russian": {
+			"text": "тыква",
+			"audio": "тыква"
+		},
+		"model": "calabaza"
+	},
+	"Barril": {
+		"English": {
+			"text": "barrel",
+			"audio": "barrel"
+		},
+		"Spanish": {
+			"text": "barril",
+			"audio": "barril"
+		},
+		"German": {
+			"text": "Fass",
+			"audio": "fass"
+		},
+		"Russian": {
+			"text": "баррель",
+			"audio": "баррель"
+		},
+		"model": "barril"
 	}
 }
