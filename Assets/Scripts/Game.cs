@@ -20,7 +20,9 @@ public class Game : MonoBehaviour
 	{
         if (objects.Count == 0)
         {
-            string jsonString = File.ReadAllText(Application.dataPath + "/Resources/items.json");
+            TextAsset txtAsset = Resources.Load("items") as TextAsset;
+            string jsonString = txtAsset.text;
+
             JsonData jsonData = JsonMapper.ToObject(jsonString);
 
             foreach (DictionaryEntry item in jsonData)
