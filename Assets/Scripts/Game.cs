@@ -3,18 +3,22 @@ using UnityEngine.UI;
 using System.Collections;
 using System.IO;
 using LitJson;
+using Vuforia;
 
 public class Game : MonoBehaviour
 {
 	private static ArrayList objects = new ArrayList();
-
 	private GameObject currentGameObject;
     private LangObject currentLangObject;
+    private string selectedAnswer;
 
-	public int numberOfQuestions = 5;
+	private bool imageTargetFound = false;
+
+    public int numberOfQuestions = 5;
     public int numberOfChoices = 4;
 
-    private GameObject gameFinishedCanvas;
+	private GameObject gameFinishedCanvas;
+	public GameObject playAudioClipButton;
 	
 	void Start ()
 	{
@@ -53,10 +57,9 @@ public class Game : MonoBehaviour
         }
 
         gameFinishedCanvas = GameObject.Find("GameFinishedCanvas");
+		playAudioClipButton = GameObject.Find("PlayAudioClip");
 
-        //GameObject.Find("GameFinishedText").GetComponent<Text>().text = "";
-        //GameObject.Find("Score").GetComponent<Text>().text = "";
-        //GameObject.Find("ScoreMsg").GetComponent<Text>().text = "";
+		playAudioClipButton.SetActive (false);
         HideGameFinishedCanvas();
     }
 
@@ -65,13 +68,10 @@ public class Game : MonoBehaviour
         string path = "Prefabs/" + currentLangObject.getModel();
 
         GameObject gameObject = Instantiate(Resources.Load(path)) as GameObject;
-        //gameObject.transform.parent = GameObject.Find("ImageTarget").transform;
-        //gameObject.transform.position = new Vector3(0f, 0.1f, 0f);
+        gameObject.transform.parent = GameObject.Find("ImageTarget").transform;
+        gameObject.transform.position = new Vector3(0f, 0f, 0f);
 
-        // AÑADIDO PARA PROBAR MODELOS EN PC. BORRAR CUANDO ESTE TODO TERMINADO
-        // Y DESCOMENTAR LAS DOS LINEAS DE ARRIBA
-        gameObject.transform.parent = GameObject.Find("GameObject").transform;
-        // -----
+		playAudioClipButton.SetActive (true);
 
         AudioSource audioSource = gameObject.AddComponent<AudioSource>();
 
@@ -141,6 +141,11 @@ public class Game : MonoBehaviour
         audioSource.Play();
     }
 
+	public void PlayAudio()
+	{
+		currentGameObject.GetComponent<AudioSource> ().Play ();
+	}
+
     public void GameFinishedScreen(int correctAnswers, int totalAnswers)
     {
         gameFinishedCanvas.SetActive(true);
@@ -157,7 +162,21 @@ public class Game : MonoBehaviour
         else
         {
             float correctRelation = 100f * correctAnswers / (float)totalAnswers;
-            msg = "Así así";
+
+			if (correctRelation < 100f && correctRelation >= 80f)
+				msg = "¡Excelente!";
+			else if (correctRelation < 80f && correctRelation >= 70f)
+            	msg = "¡Muy bien!";
+			else if (correctRelation < 70f && correctRelation >= 60f)
+				msg = "¡Bien!";
+			else if (correctRelation < 60 && correctRelation >= 50f)
+				msg = "La mitad. No esta mal";
+			else if (correctRelation < 50f && correctRelation >= 40f)
+				msg = "Puedes mejorar";
+			else if (correctRelation < 40f && correctRelation >= 20f)
+				msg = "Hay que estudiar mas";
+			else if (correctRelation < 20f && correctRelation > 0f)
+				msg = "Lo tuyo no son los idiomas";
         }
         GameObject.Find("ScoreMsg").GetComponent<Text>().text = msg;
 
@@ -169,6 +188,26 @@ public class Game : MonoBehaviour
         GameObject.Find("CorrectMsg").GetComponent<Text>().text = "";
         GameObject.Find("IncorrectMsg").GetComponent<Text>().text = "";
     }
+
+    public void SetSelectedAnswer(string answer)
+    {
+        selectedAnswer = answer;
+    }
+
+    public string GetSelectedAnswer()
+    {
+        return selectedAnswer;
+    }
+
+	public void SetImageTargetFound(bool found)
+	{
+		imageTargetFound = found;
+	}
+
+	public bool GetImageTargetFound()
+	{
+		return imageTargetFound;
+	}
 
     private void HideGameFinishedCanvas()
     {

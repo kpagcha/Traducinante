@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using System.Collections;
 
 public class EasyMode : MonoBehaviour {
@@ -11,8 +12,15 @@ public class EasyMode : MonoBehaviour {
     private string selectedLang;
 	private int correctAnswers;
 	private int incorrectAnswers;
-    private bool alreadyAnswered;
+
     private bool gameFinished = false;
+	private string selectedAnswer;
+	private bool finalAnswerConfirmed = false;
+	private bool firstQuestion = true;
+	private bool waitingForNextQuestion = false;
+
+	private GameObject confirmAnswerButton;
+	private GameObject nextQuestionButton;
 
 	void Start()
 	{
@@ -26,65 +34,73 @@ public class EasyMode : MonoBehaviour {
 
         langItemKeys = new ArrayList(langItems.Keys);
 
-        NextQuestion();
+		confirmAnswerButton = GameObject.Find ("ConfirmAnswerButton");
+		nextQuestionButton = GameObject.Find ("NextQuestionButton");
+		confirmAnswerButton.SetActive (false);
+		nextQuestionButton.SetActive (false);
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            if (gameFinished)
-                Application.LoadLevel("EasyMode");
-            else
-            {
-                if (langItemKeys.Count > 0)
-                {
-                    if (alreadyAnswered)
-                        NextQuestion();
-                }
-                else
-                    FinishLevel();
-            }
-        }
-
-        if (!alreadyAnswered)
-        {
-            bool one = Input.GetKeyDown("1");
-            bool two = Input.GetKeyDown("2");
-            bool three = Input.GetKeyDown("3");
-            bool four = Input.GetKeyDown("4");
-
-            if (one || two || three || four)
-            {
-                string answer = "";
-
-                if (one)
-                    answer = GameObject.Find("TextChoice1").GetComponent<Text>().text.ToString();
-
-                if (two)
-                    answer = GameObject.Find("TextChoice2").GetComponent<Text>().text.ToString();
-
-                if (three)
-                    answer = GameObject.Find("TextChoice3").GetComponent<Text>().text.ToString();
-
-                if (four)
-                    answer = GameObject.Find("TextChoice4").GetComponent<Text>().text.ToString();
-
-                bool isCorrect = CheckAnswer(game.getCurrentLangObject(), answer);
-                UpdateScore(isCorrect);
-
-                if (isCorrect)
-                    GameObject.Find("CorrectMsg").GetComponent<Text>().text = "¡CORRECTO!";
-                else
-                    GameObject.Find("IncorrectMsg").GetComponent<Text>().text = "INCORRECTO...";
-
-                alreadyAnswered = true;
-            }
+        if (gameFinished) {
+			FinishLevel ();
+			gameFinished = false;
+		} 
+		else if (firstQuestion) 
+		{
+			if (game.GetImageTargetFound())
+			{
+				NextQuestion();
+				firstQuestion = false;
+			}
+		}
+		else if (waitingForNextQuestion && game.GetImageTargetFound())
+		{
+			NextQuestion();
+				waitingForNextQuestion = false;
+		}
+        else {
+            if (finalAnswerConfirmed)
+			{
+				if (langItemKeys.Count == 0)
+					gameFinished = true;
+				else
+					nextQuestionButton.SetActive(true);
+			}
+			else
+			{
+				string answer = game.GetSelectedAnswer();
+				
+				if (answer != null && answer != "")
+				{
+					selectedAnswer = answer;
+					GameObject.Find ("SelectedAnswer").GetComponent<Text>().text = selectedAnswer;
+					confirmAnswerButton.SetActive(true);
+				}
+			}
         }
     }
 
+	public void ConfirmAnswer()
+	{
+		if (!finalAnswerConfirmed)
+		{
+			bool isCorrect = CheckAnswer(game.getCurrentLangObject(), selectedAnswer);
+			UpdateScore(isCorrect);
+			
+			if (isCorrect)
+				GameObject.Find("CorrectMsg").GetComponent<Text>().text = "¡CORRECTO!";
+			else
+				GameObject.Find("IncorrectMsg").GetComponent<Text>().text = "INCORRECTO...";
+			
+			finalAnswerConfirmed = true;
+		}
+	}
+
     public void NextQuestion()
     {
+		ResetSceneElements ();
+
         System.Random rnd = new System.Random();
         int pos = rnd.Next(0, langItemKeys.Count);
         
@@ -101,13 +117,14 @@ public class EasyMode : MonoBehaviour {
 
         game.InitializeChoicesText((ArrayList)langItems[langObject]);
 
-        GameObject.Find("CorrectMsg").GetComponent<Text>().text = "";
-        GameObject.Find("IncorrectMsg").GetComponent<Text>().text = "";
-
-        alreadyAnswered = false;
-
         langItemKeys.RemoveAt(pos);
     }
+
+	public void WaitingForNextQuestion()
+	{
+		waitingForNextQuestion = true;
+		ResetSceneElements ();
+	}
 
     public bool CheckAnswer(LangObject langObject, string answer)
     {
@@ -127,8 +144,6 @@ public class EasyMode : MonoBehaviour {
             correctAnswers++;
         else
             incorrectAnswers++;
-
-        Debug.Log("CORRECT/INCORRECT " + correctAnswers + "/" + incorrectAnswers);
 
         GameObject.Find("Correct").GetComponent<Text>().text = "ACIERTOS: " + correctAnswers;
         GameObject.Find("Incorrect").GetComponent<Text>().text = "FALLOS: " + incorrectAnswers;
@@ -151,11 +166,14 @@ public class EasyMode : MonoBehaviour {
 
     public void FinishLevel()
     {
+		ResetSceneElements ();
+
         game.GameFinishedScreen(correctAnswers, correctAnswers + incorrectAnswers);
 
-        gameFinished = true;
         correctAnswers = 0;
         incorrectAnswers = 0;
+
+		game.playAudioClipButton.SetActive (false);
     }
 
     public void PlayAgain()
@@ -213,4 +231,23 @@ public class EasyMode : MonoBehaviour {
 
         return game.Shuffle(choices);
     }
+
+	private void ResetSceneElements()
+	{
+		GameObject.Find ("CorrectMsg").GetComponent<Text> ().text = "";
+		GameObject.Find ("IncorrectMsg").GetComponent<Text> ().text = "";
+		GameObject.Find ("SelectedAnswer").GetComponent<Text> ().text = "";
+		confirmAnswerButton.SetActive (false);
+		nextQuestionButton.SetActive (false);
+		EventSystem.current.SetSelectedGameObject (null);
+		game.playAudioClipButton.SetActive (false);
+		GameObject.Find ("SelectedAnswer").GetComponent<Text>().text = "";
+		confirmAnswerButton.SetActive(false);
+		for (int i = 0; i < 4; i++)
+			GameObject.Find("TextChoice" + (i + 1)).GetComponent<Text>().text = "";
+
+		finalAnswerConfirmed = false;
+		selectedAnswer = "";
+		game.SetSelectedAnswer ("");
+	}
 }

@@ -83,6 +83,8 @@ namespace Vuforia
                 component.enabled = true;
             }
 
+			GameObject.Find("_GameController").GetComponent<Game>().SetImageTargetFound (true);
+
             Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " found");
         }
 
@@ -103,6 +105,8 @@ namespace Vuforia
             {
                 component.enabled = false;
             }
+
+			GameObject.Find("_GameController").GetComponent<Game>().SetImageTargetFound (false);
 
             Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " lost");
         }
