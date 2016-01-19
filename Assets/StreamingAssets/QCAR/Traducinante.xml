@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QCARConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="qcar_config.xsd">
   <Tracking>
-    <ImageTarget name="stones_scaled" size="512.000000 358.000000" />
+    <ImageTarget name="imageset_version2" size="1022.000000 751.175598" />
+    <ImageTarget name="imageset_version1b" size="1022.000000 594.000000" />
   </Tracking>
 </QCARConfig>

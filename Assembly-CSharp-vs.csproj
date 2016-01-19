@@ -86,6 +86,7 @@
      <Compile Include="Assets\Vuforia\Scripts\WireframeBehaviour.cs" />
      <Compile Include="Assets\Vuforia\Scripts\WireframeTrackableEventHandler.cs" />
      <Compile Include="Assets\Vuforia\Scripts\WordBehaviour.cs" />
+     <None Include="Assets\StreamingAssets\QCAR\Traducinante.xml" />
      <None Include="Assets\link.xml" />
      <None Include="Assets\Vuforia\Shaders\VertexLitWithZ.shader" />
      <None Include="Assets\Vuforia\Shaders\RenderVideoBackground.shader" />
@@ -94,7 +95,6 @@
      <None Include="Assets\readme_SDK.txt" />
      <None Include="Assets\Vuforia\Editor\WebcamProfiles\profiles.xml" />
      <None Include="Assets\Vuforia\Shaders\DepthMask.shader" />
-     <None Include="Assets\StreamingAssets\QCAR\Stones.xml" />
      <None Include="Assets\Vuforia\Shaders\BrightTexture.shader" />
      <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
      <None Include="Assets\Vuforia\Shaders\Text3D.shader" />
