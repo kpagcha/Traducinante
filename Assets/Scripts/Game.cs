@@ -14,11 +14,14 @@ public class Game : MonoBehaviour
 
 	private bool imageTargetFound = false;
 
-    public int numberOfQuestions = 5;
+    public int numberOfQuestions = 1;
     public int numberOfChoices = 4;
 
 	private GameObject gameFinishedCanvas;
 	public GameObject playAudioClipButton;
+	private AudioClip correctAnswerAudioClip;
+	private AudioClip wrongAnswerAudioClip;
+	private AudioClip levelCompletedAudioClip;
 	
 	void Start ()
 	{
@@ -58,6 +61,10 @@ public class Game : MonoBehaviour
 
         gameFinishedCanvas = GameObject.Find("GameFinishedCanvas");
 		playAudioClipButton = GameObject.Find("PlayAudioClip");
+		
+		correctAnswerAudioClip = Resources.Load("Audios/Game/correct_answer") as AudioClip;
+		wrongAnswerAudioClip = Resources.Load("Audios/Game/wrong_answer") as AudioClip;
+		levelCompletedAudioClip = Resources.Load("Audios/Game/level_completed") as AudioClip;
 
 		playAudioClipButton.SetActive (false);
         HideGameFinishedCanvas();
@@ -207,6 +214,27 @@ public class Game : MonoBehaviour
 	public bool GetImageTargetFound()
 	{
 		return imageTargetFound;
+	}
+
+	public void PlayCorrectAnswerAudio()
+	{
+		AudioSource audioSource = GetComponent<AudioSource>();
+		audioSource.clip = correctAnswerAudioClip;
+		audioSource.Play ();
+	}
+
+	public void PlayWrongAnswerAudio()
+	{
+		AudioSource audioSource = GetComponent<AudioSource>();
+		audioSource.clip = wrongAnswerAudioClip;
+		audioSource.Play ();
+	}
+
+	public void PlayLevelCompletedAudio()
+	{
+		AudioSource audioSource = GetComponent<AudioSource>();
+		audioSource.clip = levelCompletedAudioClip;
+		audioSource.Play ();
 	}
 
     private void HideGameFinishedCanvas()

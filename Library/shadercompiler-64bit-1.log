@@ -1,5 +1,5 @@
 Base path: C:/Users/kpagcha/Desktop/DSH/Unity/Editor/Data
-Pipe name: \\.\pipe\UnityShaderCompiler-64bit-1-6404
+Pipe name: \\.\pipe\UnityShaderCompiler-64bit-1-1548
 Cmd: getPlatforms
 Unhandled exception: Readfile from pipe failed. GLE=Ha terminado la canalización.
 

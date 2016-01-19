@@ -83,7 +83,9 @@ namespace Vuforia
                 component.enabled = true;
             }
 
-			GameObject.Find("_GameController").GetComponent<Game>().SetImageTargetFound (true);
+			GameObject game = GameObject.Find ("_GameController");
+			if (game != null)
+				game.GetComponent<Game>().SetImageTargetFound (true);
 
             Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " found");
         }
@@ -106,7 +108,9 @@ namespace Vuforia
                 component.enabled = false;
             }
 
-			GameObject.Find("_GameController").GetComponent<Game>().SetImageTargetFound (false);
+			GameObject game = GameObject.Find ("_GameController");
+			if (game != null)
+				game.GetComponent<Game>().SetImageTargetFound (false);
 
             Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " lost");
         }

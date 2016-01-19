@@ -18,6 +18,7 @@ public class EasyMode : MonoBehaviour {
 	private bool finalAnswerConfirmed = false;
 	private bool firstQuestion = true;
 	private bool waitingForNextQuestion = false;
+	private bool gameRunning = true;
 
 	private GameObject confirmAnswerButton;
 	private GameObject nextQuestionButton;
@@ -26,7 +27,7 @@ public class EasyMode : MonoBehaviour {
 	{
         game = GameObject.Find("_GameController").GetComponent<Game>();
 
-        selectedLang = "Russian";
+        selectedLang = game.GetComponent <SelectLanguage>().GetLanguage();
         correctAnswers = 0;
         incorrectAnswers = 0;
 
@@ -42,56 +43,59 @@ public class EasyMode : MonoBehaviour {
 
     void Update()
     {
-        if (gameFinished) {
-			FinishLevel ();
-			gameFinished = false;
-		} 
-		else if (firstQuestion) 
-		{
-			if (game.GetImageTargetFound())
-			{
-				NextQuestion();
-				firstQuestion = false;
-			}
-		}
-		else if (waitingForNextQuestion && game.GetImageTargetFound())
-		{
-			NextQuestion();
-				waitingForNextQuestion = false;
-		}
-        else {
-            if (finalAnswerConfirmed)
-			{
+		if (gameRunning) {
+			if (gameFinished) {
+				FinishLevel ();
+				gameFinished = false;
+			} else if (firstQuestion) {
+				if (game.GetImageTargetFound ()) {
+					NextQuestion ();
+					firstQuestion = false;
+				}
+			} else if (waitingForNextQuestion) {
 				if (langItemKeys.Count == 0)
-					gameFinished = true;
-				else
-					nextQuestionButton.SetActive(true);
-			}
-			else
-			{
-				string answer = game.GetSelectedAnswer();
-				
-				if (answer != null && answer != "")
 				{
-					selectedAnswer = answer;
-					GameObject.Find ("SelectedAnswer").GetComponent<Text>().text = selectedAnswer;
-					confirmAnswerButton.SetActive(true);
+					gameFinished = true;
+				}
+				else if (game.GetImageTargetFound ())
+				{
+					NextQuestion ();
+					waitingForNextQuestion = false;
+				}
+			} else {
+				if (finalAnswerConfirmed) {
+					confirmAnswerButton.SetActive(false);
+					nextQuestionButton.SetActive (true);
+				} else {
+					string answer = game.GetSelectedAnswer ();
+					
+					if (answer != null && answer != "") {
+						selectedAnswer = answer;
+						GameObject.Find ("SelectedAnswer").GetComponent<Text> ().text = selectedAnswer;
+						confirmAnswerButton.SetActive (true);
+					}
 				}
 			}
-        }
+		}
     }
 
 	public void ConfirmAnswer()
 	{
-		if (!finalAnswerConfirmed)
+		if (!finalAnswerConfirmed && !gameFinished)
 		{
 			bool isCorrect = CheckAnswer(game.getCurrentLangObject(), selectedAnswer);
 			UpdateScore(isCorrect);
 			
 			if (isCorrect)
+			{
 				GameObject.Find("CorrectMsg").GetComponent<Text>().text = "¡CORRECTO!";
+				game.PlayCorrectAnswerAudio();
+			}
 			else
-				GameObject.Find("IncorrectMsg").GetComponent<Text>().text = "INCORRECTO...";
+			{
+				GameObject.Find("IncorrectMsg").GetComponent<Text>().text = "¡INCORRECTO!";
+				game.PlayWrongAnswerAudio();
+			}
 			
 			finalAnswerConfirmed = true;
 		}
@@ -169,11 +173,14 @@ public class EasyMode : MonoBehaviour {
 		ResetSceneElements ();
 
         game.GameFinishedScreen(correctAnswers, correctAnswers + incorrectAnswers);
+		game.PlayLevelCompletedAudio ();
 
         correctAnswers = 0;
         incorrectAnswers = 0;
 
 		game.playAudioClipButton.SetActive (false);
+
+		gameRunning = false;
     }
 
     public void PlayAgain()
